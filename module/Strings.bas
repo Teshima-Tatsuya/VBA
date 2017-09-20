@@ -22,3 +22,14 @@ End Function
 Function FINDR(target As String, needle As String) As Integer
     FINDR = InStrRev(target, needle)
 End Function
+
+' VLOOKUPの左端以外で検索可能な関数
+' target 検索対象
+' dataRng データ検索範囲
+' searchRng 検索範囲
+' column 検索対象列
+Function VLOOKUPEX(target As String, dataRng As Variant, _
+                            searchRng As Range, column As Integer)
+    VLOOKUPEX = WorksheetFunction.Index(dataRng, _
+                        WorksheetFunction.Match(target, searchRng, 0), column)
+End Function
