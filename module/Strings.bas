@@ -1,9 +1,9 @@
 Attribute VB_Name = "Strings"
 Option Explicit
 
-' ‘I‘ğ‚µ‚½”ÍˆÍ‚Ì•¶š—ñ‚ğŒ‹‡‚·‚éiƒfƒtƒHƒ‹ƒg‚ÍƒJƒ“ƒ}‹æØ‚èj
-' rng Œ‹‡‚µ‚½‚¢”ÍˆÍ
-' delim Œ‹‡•¶š
+' é¸æŠã—ãŸç¯„å›²ã®æ–‡å­—åˆ—ã‚’çµåˆã™ã‚‹ï¼ˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯ã‚«ãƒ³ãƒåŒºåˆ‡ã‚Šï¼‰
+' rng çµåˆã—ãŸã„ç¯„å›²
+' delim çµåˆæ–‡å­—
 Function JOIN(rng As Range, Optional delim As String = ",") As String
     Dim result As String
     Dim r As Range
@@ -16,20 +16,27 @@ Function JOIN(rng As Range, Optional delim As String = ",") As String
     JOIN = Left(result, Len(result) - 1)
 End Function
 
-' •¶š—ñ‚ğ‰E‚©‚çŒŸõ‚µ‚ÄAÅ‰‚Éƒqƒbƒg‚µ‚½ˆÊ’u‚ğ•Ô‚·B
-' target ŒŸõ‘ÎÛ‚Ì•¶š—ñ
-' needle ŒŸõ‚·‚é•¶š—ñ
+' æ–‡å­—åˆ—ã‚’å³ã‹ã‚‰æ¤œç´¢ã—ã¦ã€æœ€åˆã«ãƒ’ãƒƒãƒˆã—ãŸä½ç½®ã‚’è¿”ã™ã€‚
+' target æ¤œç´¢å¯¾è±¡ã®æ–‡å­—åˆ—
+' needle æ¤œç´¢ã™ã‚‹æ–‡å­—åˆ—
 Function FINDR(target As String, needle As String) As Integer
     FINDR = InStrRev(target, needle)
 End Function
 
-' VLOOKUP‚Ì¶’[ˆÈŠO‚ÅŒŸõ‰Â”\‚ÈŠÖ”
-' target ŒŸõ‘ÎÛ
-' dataRng ƒf[ƒ^ŒŸõ”ÍˆÍ
-' searchRng ŒŸõ”ÍˆÍ
-' column ŒŸõ‘ÎÛ—ñ
-Function VLOOKUPEX(target As String, dataRng As Variant, _
-                            searchRng As Range, column As Integer)
-    VLOOKUPEX = WorksheetFunction.Index(dataRng, _
-                        WorksheetFunction.Match(target, searchRng, 0), column)
+Public Function VLOOKUPEX(needle As String, search_range As Range, return_array, Optional if_not_find = "") As String
+    Dim cell As Range
+    Dim i As Long
+    
+    i = 1
+    For Each cell In search_range
+        If cell.Value = needle Then
+            VLOOKUPEX = return_array(i).Value
+            Exit Function
+        End If
+        i = i + 1
+    Next
+    
+    If TypeName(if_not_find) = "" Then
+    End If
+    VLOOKUPEX = if_not_find
 End Function
