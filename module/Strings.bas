@@ -40,3 +40,25 @@ Public Function VLOOKUPEX(needle As String, search_range As Range, return_array,
     End If
     VLOOKUPEX = if_not_find
 End Function
+
+' 正規表現で検索する関数
+Public Function SEARCHRE(str As String, pattern As String) As String
+    Dim RE
+    Dim Match
+    Dim r As Range
+    
+    Set RE = CreateObject("VBScript.RegExp")
+    
+    With RE
+        .pattern = pattern
+        .IgnoreCase = False
+        .Global = True
+        Set Match = .Execute(str)
+    End With
+    
+    If Match.Count > 0 Then
+        SEARCHRE = Match(0).Value
+    Else
+        SEARCHRE = ""
+    End If
+End Function
