@@ -42,7 +42,7 @@ Public Function VLOOKUPEX(needle As String, search_range As Range, return_array,
 End Function
 
 ' 正規表現で検索する関数
-Public Function SEARCHRE(str As String, pattern As String) As String
+Public Function SEARCHRE(str As String, pattern As String, Optional index As Integer = 1, Optional sub_index As Variant) As String
     Dim RE
     Dim Match
     Dim r As Range
@@ -57,7 +57,13 @@ Public Function SEARCHRE(str As String, pattern As String) As String
     End With
     
     If Match.Count > 0 Then
-        SEARCHRE = Match(0).Value
+        If IsMissing(sub_index) = False Then
+            If Match(index - 1).SubMatches.Count > 0 Then
+                SEARCHRE = Match(index - 1).SubMatches(Int(sub_index) - 1)
+            End If
+        Else
+            SEARCHRE = Match(index - 1).Value
+        End If
     Else
         SEARCHRE = ""
     End If
